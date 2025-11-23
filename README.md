@@ -1,97 +1,278 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# 📚 Firebase Mahasiswa App
 
-# Getting Started
+Aplikasi React Native untuk mengelola data mahasiswa menggunakan Firebase Authentication dan Firestore sebagai database.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## ✨ Fitur
 
-## Step 1: Start Metro
+- 🔐 **Autentikasi**: Login dan Register menggunakan Firebase Auth
+- 💾 **Persistent Storage**: Data session disimpan dengan MMKV
+- 📊 **Data Mahasiswa**: Menampilkan daftar mahasiswa dari Firestore
+- 🔄 **Pull to Refresh**: Refresh data dengan gesture pull-down
+- 🎨 **Modern UI**: Antarmuka yang clean dan responsif
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## 🛠️ Tech Stack
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- **React Native** 0.82.1
+- **Firebase** (Auth & Firestore)
+- **React Navigation** 7.x
+- **MMKV** - Fast & encrypted storage
+- **TypeScript** support
 
-```sh
-# Using npm
-npm start
+## 📋 Prerequisites
 
-# OR using Yarn
-yarn start
+Sebelum memulai, pastikan Anda sudah install:
+
+- [Node.js](https://nodejs.org/) >= 20
+- [JDK](https://www.oracle.com/java/technologies/downloads/) 17
+- [Android Studio](https://developer.android.com/studio) (untuk Android)
+- [Xcode](https://developer.apple.com/xcode/) (untuk iOS, hanya macOS)
+- [CocoaPods](https://cocoapods.org/) (untuk iOS)
+
+## 🚀 Installation
+
+### 1. Clone Repository
+
+```bash
+git clone <repository-url>
+cd FirebaseMahasiswa
 ```
 
-## Step 2: Build and run your app
+### 2. Install Dependencies
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+```bash
+npm install
 ```
 
-### iOS
+### 3. iOS Setup (macOS only)
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
+```bash
+# Install Ruby dependencies
 bundle install
-```
 
-Then, and every time you update your native dependencies, run:
-
-```sh
+# Install CocoaPods dependencies
+cd ios
 bundle exec pod install
+cd ..
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+### 4. Firebase Configuration ⚠️ **PENTING**
 
-```sh
-# Using npm
+**File ini TIDAK di-commit ke Git untuk keamanan!**
+
+#### Setup Google Services (Android):
+
+1. Download `google-services.json` dari [Firebase Console](https://console.firebase.google.com/)
+   - Pilih project Anda
+   - Project Settings → General
+   - Scroll ke bawah → Your apps → Android
+   - Klik "Download google-services.json"
+
+2. **Copy file ke lokasi yang benar:**
+   ```bash
+   # Windows
+   copy path\to\downloaded\google-services.json android\app\google-services.json
+   
+   # macOS/Linux
+   cp path/to/downloaded/google-services.json android/app/google-services.json
+   ```
+
+3. **JANGAN commit file ini ke Git!** (sudah ada di `.gitignore`)
+
+#### Setup Google Services (iOS):
+
+1. Download `GoogleService-Info.plist` dari Firebase Console
+2. Drag & drop ke Xcode project (folder `TugasFirebaseMahasiswa`)
+3. Pastikan "Copy items if needed" dicentang
+
+#### Verifikasi Setup:
+
+```bash
+# Pastikan file ada
+ls android/app/google-services.json  # macOS/Linux
+dir android\app\google-services.json # Windows
+
+# Pastikan TIDAK ter-track di git
+git status android/app/google-services.json
+# Output seharusnya: "nothing to commit"
+
+### 5. Firestore Setup
+
+1. Buka Firebase Console → Firestore Database
+2. Buat collection baru: `mahasiswa`
+3. Tambahkan beberapa data sample:
+
+```json
+{
+  "nama": "John Doe",
+  "nim": "123456789",
+  "jurusan": "Teknik Informatika",
+  "semester": 5
+}
+```
+
+## 🏃 Running the App
+
+### Start Metro
+
+```bash
+npm start
+```
+
+### Run Android
+
+```bash
+npm run android
+```
+
+### Run iOS (macOS only)
+
+```bash
 npm run ios
-
-# OR using Yarn
-yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+## 📱 Screenshots
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+### Login Screen
+Halaman login dengan validasi email dan password
 
-## Step 3: Modify your app
+### Home Screen
+Daftar mahasiswa dengan info lengkap (nama, NIM, jurusan, semester)
 
-Now that you have successfully run the app, let's make changes!
+## 🗂️ Project Structure
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+```
+FirebaseMahasiswa/
+├── src/
+│   ├── config/
+│   │   └── storage.js          # MMKV storage configuration
+│   ├── screens/
+│   │   ├── LoginScreen.js      # Login & Register screen
+│   │   └── HomeScreen.js       # Daftar mahasiswa
+│   └── services/
+│       ├── authService.js      # Firebase Auth functions
+│       └── firestoreService.js # Firestore CRUD functions
+├── android/                     # Android native code
+├── ios/                         # iOS native code
+└── App.tsx                      # Root component
+```
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+## 🔧 Available Scripts
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+- `npm start` - Start Metro bundler
+- `npm run android` - Run on Android
+- `npm run ios` - Run on iOS
+- `npm run lint` - Run ESLint
+- `npm test` - Run tests
 
-## Congratulations! :tada:
+## 🧹 Cleanup Build Files
 
-You've successfully run and modified your React Native App. :partying_face:
+Untuk membersihkan build files dan menghemat storage:
 
-### Now what?
+**Windows (CMD)**:
+```cmd
+rmdir /s /q android\app\build
+rmdir /s /q android\.gradle
+rmdir /s /q android\build
+rmdir /s /q node_modules
+```
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+**macOS/Linux**:
+```bash
+rm -rf android/app/build android/.gradle android/build
+rm -rf ios/build ios/Pods
+rm -rf node_modules
+```
 
-# Troubleshooting
+Kemudian reinstall:
+```bash
+npm install
+cd ios && bundle exec pod install && cd ..
+```
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+## 📝 Environment Variables
 
-# Learn More
+Create `.env` file (optional):
 
-To learn more about React Native, take a look at the following resources:
+```env
+FIREBASE_API_KEY=your_api_key
+FIREBASE_AUTH_DOMAIN=your_auth_domain
+FIREBASE_PROJECT_ID=your_project_id
+```
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+## 🐛 Troubleshooting
+
+### Build Failed
+
+**Android:**
+```bash
+cd android
+./gradlew clean
+cd ..
+npm run android
+```
+
+**iOS:**
+```bash
+cd ios
+pod deintegrate
+pod install
+cd ..
+npm run ios
+```
+
+### Metro Bundler Issues
+
+```bash
+npm start -- --reset-cache
+```
+
+### Port Already in Use
+
+```bash
+npx react-native start --port 8082
+```
+
+## 📚 Dependencies
+
+### Production
+- `@react-native-firebase/app` - Firebase Core
+- `@react-native-firebase/auth` - Authentication
+- `@react-native-firebase/firestore` - Database
+- `@react-navigation/native` - Navigation
+- `react-native-mmkv` - Fast storage
+- `react-native-safe-area-context` - Safe area handling
+- `react-native-screens` - Native screens
+
+### Development
+- `@babel/core` - Babel compiler
+- `@react-native/eslint-config` - ESLint config
+- `prettier` - Code formatter
+- `typescript` - Type checking
+
+## 🤝 Contributing
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 👨‍💻 Author
+
+**Sulhan Fuadi**
+- Email: your.email@example.com
+- GitHub: [@sulhanfuadi](https://github.com/sulhanfuadi)
+
+## 🙏 Acknowledgments
+
+- [React Native Documentation](https://reactnative.dev/docs/getting-started)
+- [Firebase Documentation](https://firebase.google.com/docs)
+- [React Navigation](https://reactnavigation.org/docs/getting-started)
+
+---
+
+Made with ❤️ using React Native & Firebase
