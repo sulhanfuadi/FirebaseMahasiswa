@@ -264,7 +264,7 @@ This project is licensed under the MIT License.
 ## 👨‍💻 Author
 
 **Sulhan Fuadi**
-- Email: your.email@example.com
+- PBP (E) 2025 - Universitas Diponegoro
 - GitHub: [@sulhanfuadi](https://github.com/sulhanfuadi)
 
 ## 🙏 Acknowledgments
