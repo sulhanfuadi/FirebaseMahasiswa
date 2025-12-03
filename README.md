@@ -81,7 +81,7 @@ cd ..
 #### Setup Google Services (iOS):
 
 1. Download `GoogleService-Info.plist` dari Firebase Console
-2. Drag & drop ke Xcode project (folder `TugasFirebaseMahasiswa`)
+2. Drag & drop ke Xcode project (folder `FirebaseMahasiswa`)
 3. Pastikan "Copy items if needed" dicentang
 
 #### Verifikasi Setup:
